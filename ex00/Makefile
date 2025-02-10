@@ -1,5 +1,5 @@
 NAME = megaphone
-CXX = c++
+CXX = clang++
 STD = -std=c++98
 CXXFLAGS = -Wextra -Wall -Werror $(STD)
 RM = rm -f
