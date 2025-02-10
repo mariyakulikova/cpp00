@@ -6,12 +6,13 @@
 /*   By: mkulikov <mkulikov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:18:26 by mkulikov          #+#    #+#             */
-/*   Updated: 2025/02/10 13:39:24 by mkulikov         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:45:04 by mkulikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <cctype>
+#include <string>
 
 int	main(int argc, char **argv)
 {
@@ -21,8 +22,15 @@ int	main(int argc, char **argv)
 	{
 		for (int i = 1; i < argc; i++)
 		{
-			for (int j = 0; j < argv[i][j]; j++)
-				std::cout << static_cast<char>(std::toupper(argv[i][j]));
+			std::string str(argv[i]);
+			for (size_t j = 0; j < str.length(); j++)
+			{
+				std::cout << static_cast<char>(std::toupper(static_cast<unsigned char>(str[j])));
+			}
+			if (i < argc - 1)
+			{
+				std::cout << " ";
+			}
 		}
 		std::cout << std::endl;
 	}
