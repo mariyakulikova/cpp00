@@ -6,7 +6,7 @@
 /*   By: mkulikov <mkulikov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:13:04 by mkulikov          #+#    #+#             */
-/*   Updated: 2025/02/11 18:12:41 by mkulikov         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:40:19 by mkulikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ private:
 	string phoneNumber;
 	string darkestSecret;
 
-public :
+public:
 	Contact();
 	Contact(const string &firstName
 			, const string &lastName

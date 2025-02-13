@@ -4,7 +4,7 @@ STD = -std=c++98
 CXXFLAGS = -Wextra -Wall -Werror $(STD)
 RM = rm -f
 
-SRCS = Contact.cpp main.cpp
+SRCS = Contact.cpp main.cpp Phonebook.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
