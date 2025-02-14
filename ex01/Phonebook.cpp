@@ -6,7 +6,7 @@
 /*   By: mkulikov <mkulikov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 18:35:53 by mkulikov          #+#    #+#             */
-/*   Updated: 2025/02/13 18:05:32 by mkulikov         ###   ########.fr       */
+/*   Updated: 2025/02/14 12:38:14 by mkulikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,29 @@ using std::right;
 using std::istringstream;
 
 PhoneBook::PhoneBook()
-		: curr_idx(0)
-		, added_num(0)
+		: nextIdx(0)
+		, contactCount(0)
 {}
 
-PhoneBook::PhoneBook(int curr_idx, int added_num)
-		: curr_idx(curr_idx)
-		, added_num(added_num)
+PhoneBook::PhoneBook(int nextIdx, int contactCount)
+		: nextIdx(nextIdx)
+		, contactCount(contactCount)
 {}
 
 PhoneBook::PhoneBook(const PhoneBook &other)
-		: curr_idx(other.curr_idx)
-		, added_num(other.added_num)
+		: nextIdx(other.nextIdx)
+		, contactCount(other.contactCount)
 {
-	for (int i = 0; i < other.added_num; i++) {
+	for (int i = 0; i < other.contactCount; i++) {
 		contacts[i] = other.contacts[i];
 	}
 }
 
 PhoneBook &PhoneBook::operator=(const PhoneBook &other) {
 	if (this != &other) {
-		curr_idx = other.curr_idx;
-		added_num = other.added_num;
-		for (int i = 0; i < other.added_num; i++) {
+		nextIdx = other.nextIdx;
+		contactCount = other.contactCount;
+		for (int i = 0; i < other.contactCount; i++) {
 			contacts[i] = other.contacts[i];
 		}
 	}
@@ -93,13 +93,15 @@ void PhoneBook::addNewContact() {
 
 	while (!requestFieldInput("darkest secret", buf)) {}
 	contact.setDarkestSecret(buf);
-	curr_idx = added_num % 8;
-	contacts[curr_idx] = contact;
-	added_num++;
+	contacts[nextIdx] = contact;
+	if (contactCount < 8) {
+		contactCount++;
+	}
+	nextIdx = (nextIdx + 1) % 8;
 }
 
 bool PhoneBook::isEmpty() {
-	if (added_num == 0)
+	if (contactCount == 0)
 		return true;
 	return false;
 }
@@ -113,7 +115,7 @@ void PhoneBook::printTable() {
 		 << setw(10) << right << "First name" << "|"
 		 << setw(10) << right << "Last name" << "|"
 		 << setw(10) << right << "Nickname" << endl;
-	for (int i = 0; i < (added_num > 8 ? 8 : added_num); i++) {
+	for (int i = 0; i < contactCount; i++) {
 		cout << setw(10) << right << i << "|"
 			 << setw(10) << right << formatStr(contacts[i].getFirstName()) << "|"
 			 << setw(10) << right << formatStr(contacts[i].getLastName()) << "|"
@@ -142,11 +144,11 @@ void PhoneBook::search() {
 	getline(cin, str);
 	istringstream iss(str);
 	iss >> idx;
-	if (idx < 0 || idx > curr_idx) {
-		cout << "Invalid index\n";
-		return ;
+	if (idx > -1 && idx < contactCount) {
+		showContact(idx);
 	}
-	showContact(idx);
+	cout << "Invalid index\n";
+	return ;
 }
 
 void PhoneBook::exit() {
