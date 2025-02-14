@@ -6,7 +6,7 @@
 /*   By: mkulikov <mkulikov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 18:35:53 by mkulikov          #+#    #+#             */
-/*   Updated: 2025/02/14 12:38:14 by mkulikov         ###   ########.fr       */
+/*   Updated: 2025/02/14 12:53:40 by mkulikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,7 @@ void PhoneBook::search() {
 	string str;
 	getline(cin, str);
 	istringstream iss(str);
-	iss >> idx;
-	if (idx > -1 && idx < contactCount) {
+	if ((iss >> idx) && (idx > -1 && idx < contactCount)) {
 		showContact(idx);
 	}
 	cout << "Invalid index\n";
