@@ -1,4 +1,4 @@
-NAME = phonebook
+NAME = account
 CXX = clang++
 STD = -std=c++98
 CXXFLAGS = -Wextra -Wall -Werror $(STD)

@@ -6,7 +6,7 @@
 /*   By: mkulikov <mkulikov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:58:06 by mkulikov          #+#    #+#             */
-/*   Updated: 2025/02/13 22:32:35 by mkulikov         ###   ########.fr       */
+/*   Updated: 2025/02/14 11:55:12 by mkulikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int Account::getNbDeposits() {
 }
 
 int Account::getNbWithdrawals() {
-	return _nbWithdrawals;
+	return _totalNbWithdrawals;
 }
 
 void Account::_displayTimestamp(void) {
@@ -48,7 +48,7 @@ void Account::_displayTimestamp(void) {
 
 void Account::displayAccountsInfos(void) {
 	_displayTimestamp();
-	cout << " accounts:" << getNbAccounts()
+	cout << "accounts:" << getNbAccounts()
 		 << ";total:" << getTotalAmount()
 		 << ";deposits:" << getNbDeposits()
 		 << ";withdrawals:" << getNbWithdrawals() << endl;
@@ -69,8 +69,8 @@ void Account::displayStatus(void) const {
 	_displayTimestamp();
 	cout << "index:" << _accountIndex
 		 << ";amount:" << checkAmount()
-		 << ":deposits:" << _nbDeposits
-		 << "withdrawls:" << _nbWithdrawals << endl;
+		 << ";deposits:" << _nbDeposits
+		 << ";withdrawals:" << _nbWithdrawals << endl;
 }
 
 void Account::makeDeposit(int deposit) {
@@ -86,14 +86,38 @@ void Account::makeDeposit(int deposit) {
 		 << ";nb_deposits:" << _nbDeposits << endl;
 }
 
-Account::Account(int initial_deposit) {
-
+Account::Account(int initial_deposit)
+		: _accountIndex(getNbAccounts())
+		, _amount(initial_deposit)
+		, _nbDeposits(0)
+		, _nbWithdrawals(0) {
+	_nbAccounts++;
+	_totalAmount += initial_deposit;
+	_displayTimestamp();
+	cout << "index:" << _accountIndex
+		 << ";amount:" << _amount
+		 << ";created" << endl;
 }
 
 bool Account::makeWithdrawal(int withdrawal) {
+	_displayTimestamp();
+	if (withdrawal > checkAmount()) {
+		cout << "index:" << _accountIndex
+			 << ";p_amount:" << checkAmount()
+			 << ";withdrawal:" << "refused"
+			 << endl;
+		return false;
+	}
+	_amount -= withdrawal;
+	_totalAmount -= withdrawal;
+	_nbWithdrawals = 1;
+	_totalNbWithdrawals++;
+	cout << "index:" << _accountIndex
+			 << ";p_amount:" << checkAmount() + withdrawal
+			 << ";withdrawal:" << withdrawal
+			 << ";amount:" << checkAmount()
+			 << ";nb_withdrawals:" << _nbWithdrawals
+			 << endl;
 
-}
-
-Account::Account() {
-
+	return true;
 }
